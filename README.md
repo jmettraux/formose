@@ -1,5 +1,5 @@
 
-# formose
+# formose.js
 
 ## LICENSE
 
