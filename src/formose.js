@@ -33,8 +33,42 @@ var Formose = (function() {
   //
   // protected functions
 
+  var determineArgs = function(as) {
+
+    var elts = [];
+    var modes = [];
+    var sel = [];
+    var objects = [];
+
+    as = Array.from(as);
+  };
+
+  var render = function(/* args */) {
+    var as = determineArgs(arguments);
+  };
+
+  var derive = function(/* args */) {
+    var as = determineArgs(arguments);
+// TODO
+  };
+
+  var validate = function(/* args */) {
+    var as = determineArgs(arguments);
+// TODO
+  };
+
+  var read = function(/* args */) {
+    var as = determineArgs(arguments);
+// TODO
+  };
+
   //
   // public functions
+
+  this.render /*(sta, sel, data, form, mode)*/ = render;
+  this.validate /*(data, form)*/ = validate;
+  this.derive /*(sta, sel)*/ = derive;
+  this.read /*(sta, sel)*/ = read;
 
   //
   // done
