@@ -41,10 +41,14 @@ var Formose = (function() {
     var objects = [];
 
     as = Array.from(as);
+
+    return {
+      sta: null, sel: null, data: null, form: null, mode: null, rest: {} };
   };
 
   var render = function(/* args */) {
     var as = determineArgs(arguments);
+return as; // FIXME
   };
 
   var derive = function(/* args */) {
