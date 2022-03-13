@@ -33,17 +33,29 @@ var Formose = (function() {
   //
   // protected functions
 
+  var MODES = [ 'edit', 'view' ];
+
   var determineArgs = function(as) {
 
-    var elts = [];
-    var modes = [];
-    var sel = [];
     var objects = [];
 
     as = Array.from(as);
+    var elts = as.filter(function(e) {
+      return H.isElt(e); });
+    var modes = as.filter(function(e) {
+      return MODES.includes(e); });
+    var sels = as.filter(function(e) {
+      return (typeof e === 'string') && ! modes.includes(e); });
+    var objects = as.filter(function(e) {
+      return (typeof e === 'object') && ! elts.includes(e); });
 
     return {
-      sta: null, sel: null, data: null, form: null, mode: null, rest: {} };
+      sta: elts.shift() || sels.shift(),
+      sel: sels.shift(),
+      data: objects.shift(),
+      form: objects.shift(),
+      mode: modes.shift(),
+      rest: { elts: elts, modes: modes, sels: sels, objects: objects } };
   };
 
   var render = function(/* args */) {
@@ -53,17 +65,17 @@ return as; // FIXME
 
   var derive = function(/* args */) {
     var as = determineArgs(arguments);
-// TODO
+return as; // TODO
   };
 
   var validate = function(/* args */) {
     var as = determineArgs(arguments);
-// TODO
+return as; // TODO
   };
 
   var read = function(/* args */) {
     var as = determineArgs(arguments);
-// TODO
+return as; // TODO
   };
 
   //
