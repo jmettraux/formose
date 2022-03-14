@@ -83,32 +83,32 @@ RSpec.configure do |c|
 end
 
 
-#class ::String
-#
-#  def htrip
-#    self
-#      .gsub(/^( +)/, '')
-#      .gsub(/>\s+(.)/) { |m| ">#{$1}" }
-#      .gsub(/\s+</, '<')
-#      .strip
-#  end
-#
-#  def huntrip
-#    '  ' + htrip.gsub(/>/, ">\n  ")
-#  end
-#end
+class ::String
 
-#RSpec::Matchers.define :eqh do |expected|
-#
-#  match do |actual|
-#
-#    expected.htrip == actual.htrip
-#  end
-#
-#  failure_message do |actual|
-#
-#    "expected:\n#{expected.huntrip}\n" +
-#    "actual:\n#{actual.huntrip}"
-#  end
-#end
+  def htrip
+    self
+      .gsub(/^( +)/, '')
+      .gsub(/>\s+(.)/) { |m| ">#{$1}" }
+      .gsub(/\s+</, '<')
+      .strip
+  end
+
+  def huntrip
+    '  ' + htrip.gsub(/>/, ">\n  ")
+  end
+end
+
+RSpec::Matchers.define :eqh do |expected|
+
+  match do |actual|
+
+    expected.htrip == actual.htrip
+  end
+
+  failure_message do |actual|
+
+    "expected:\n#{expected.huntrip}\n" +
+    "actual:\n#{actual.huntrip}"
+  end
+end
 

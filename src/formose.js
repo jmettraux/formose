@@ -49,9 +49,12 @@ var Formose = (function() {
     var objects = as.filter(function(e) {
       return (typeof e === 'object') && ! elts.includes(e); });
 
+    var sta = elts.shift() || sels.shift();
+    var sel = sels.shift();
+    var sta_sel = [ sta, sel ].filter(function(e) { return !! e });
+
     return {
-      sta: elts.shift() || sels.shift(),
-      sel: sels.shift(),
+      sta: sta, sel: sel, sta_sel: sta_sel,
       data: objects.shift(),
       form: objects.shift(),
       mode: modes.shift(),
@@ -73,9 +76,27 @@ return as; // TODO
 return as; // TODO
   };
 
+  var readElementName = function(e) {
+    return H.att(e, 'name');
+  };
+  var readElement = function(e, r) {
+    r[readElementName(e)] = e.value;
+  };
+
   var read = function(/* args */) {
+
     var as = determineArgs(arguments);
-return as; // TODO
+    var e = H.elt.apply(null, as.sta_sel);
+
+    var r = {};
+    var readElt = function(ie) { readElement(ie, r); };
+
+    H.forEach(e, 'input[name]', readElt);
+    H.forEach(e, 'select[name]', readElt);
+    H.forEach(e, 'textarea[name]', readElt);
+    H.forEach(e, '[is]', readElt);
+
+    return r;
   };
 
   //
