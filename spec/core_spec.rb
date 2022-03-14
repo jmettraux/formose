@@ -19,14 +19,29 @@ describe 'Formose' do
     #
   describe '.render' do
 
-    it 'works (sta, data, form, mode)' do
+    context "'view'" do
 
-      expect(evaluate(%{
-        Formose.render('#container0', {}, {}, 'view');
-        return H.elt('#container0').outerHTML;
-      })).to eqh(%{
-        <div id="container0"></div>
-      })
+      it 'works (sta, data, form, mode) - nothing' do
+
+        expect(evaluate(%{
+          Formose.render('#container0', {}, {}, 'view');
+          return H.elt('#container0').outerHTML;
+        })).to eqh(%{
+          <div id="container0"></div>
+        })
+      end
+
+      it 'works (sta, data, form, mode)' do
+
+        expect(evaluate(%{
+          return Formose
+            .render('#container0', { age: 33 }, 'view')
+            .outerHTML;
+        })).to eqh(%{
+          <div id="container0">
+          </div>
+        })
+      end
     end
   end
 

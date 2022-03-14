@@ -49,21 +49,28 @@ var Formose = (function() {
     var objects = as.filter(function(e) {
       return (typeof e === 'object') && ! elts.includes(e); });
 
+    var noData = as.includes(self.NOFORM);
+    var noForm = as.includes(self.NODATA);
+
     var sta = elts.shift() || sels.shift();
     var sel = sels.shift();
     var sta_sel = [ sta, sel ].filter(function(e) { return !! e });
 
     return {
       sta: sta, sel: sel, sta_sel: sta_sel,
-      data: objects.shift(),
-      form: objects.shift(),
+      data: noData ? null : objects.shift(),
+      form: noForm ? null : objects.shift(),
       mode: modes.shift(),
+      opts: objects.shift(),
       rest: { elts: elts, modes: modes, sels: sels, objects: objects } };
   };
 
   var render = function(/* args */) {
+
     var as = determineArgs(arguments);
-return as; // FIXME
+    var e = H.elt.apply(null, as.sta_sel);
+
+    return e;
   };
 
   var derive = function(/* args */) {
@@ -102,10 +109,15 @@ return as; // TODO
   //
   // public functions
 
+  this.NOFORM = {};
+  this.NODATA = {};
+
   this.render /*(sta, sel, data, form, mode)*/ = render;
   this.validate /*(data, form)*/ = validate;
   this.derive /*(sta, sel)*/ = derive;
   this.read /*(sta, sel)*/ = read;
+
+  this.formats = {};
 
   //
   // done
@@ -113,4 +125,13 @@ return as; // TODO
   return this;
 
 }).apply({}); // end Formose
+
+
+Formose.formats.table = {
+  makeContainer: function(e) { return H.c(e, 'table.formose-container'); },
+  makeRow: function(ce) { return H.c(ce, 'tr'); },
+  makeKey: function(re, k) { return H.c(re, 'td.formose-key', k); },
+  makeVal: function(re) { return H.c(re, 'td.formose-val'); } };
+Formose.formats.default =
+  Formose.formats.table;
 
